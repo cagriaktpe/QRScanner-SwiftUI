@@ -11,6 +11,7 @@
 		811DE26F2BA8575800E3D028 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811DE26E2BA8575800E3D028 /* ContentView.swift */; };
 		811DE2712BA8575A00E3D028 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 811DE2702BA8575A00E3D028 /* Assets.xcassets */; };
 		811DE2742BA8575A00E3D028 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 811DE2732BA8575A00E3D028 /* Preview Assets.xcassets */; };
+		811DE27B2BA8578000E3D028 /* QRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811DE27A2BA8577F00E3D028 /* QRScanner.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		811DE26E2BA8575800E3D028 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		811DE2702BA8575A00E3D028 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		811DE2732BA8575A00E3D028 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		811DE27A2BA8577F00E3D028 /* QRScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanner.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 			children = (
 				811DE26C2BA8575800E3D028 /* QRScannerApp.swift */,
 				811DE26E2BA8575800E3D028 /* ContentView.swift */,
+				811DE27A2BA8577F00E3D028 /* QRScanner.swift */,
 				811DE2702BA8575A00E3D028 /* Assets.xcassets */,
 				811DE2722BA8575A00E3D028 /* Preview Content */,
 			);
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				811DE27B2BA8578000E3D028 /* QRScanner.swift in Sources */,
 				811DE26F2BA8575800E3D028 /* ContentView.swift in Sources */,
 				811DE26D2BA8575800E3D028 /* QRScannerApp.swift in Sources */,
 			);
@@ -275,6 +279,8 @@
 				DEVELOPMENT_TEAM = J6WDBVB643;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = QRScanner/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need to access your camera for scanning QR code.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -304,6 +310,8 @@
 				DEVELOPMENT_TEAM = J6WDBVB643;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = QRScanner/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need to access your camera for scanning QR code.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

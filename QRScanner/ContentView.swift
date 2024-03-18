@@ -8,14 +8,20 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var scanResult = "No QR code detected"
+ 
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        ZStack(alignment: .bottom) {
+            
+            QRScanner(result: $scanResult)
+ 
+            Text(scanResult)
+                .padding()
+                .background(.black)
+                .foregroundColor(.white)
+                .padding(.bottom)
         }
-        .padding()
+        
     }
 }
 
