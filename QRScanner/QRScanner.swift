@@ -7,6 +7,8 @@
 
 import SwiftUI
 import AVFoundation
+import MapKit
+import Contacts
 
 class QRScannerController: UIViewController {
     var captureSession = AVCaptureSession()
@@ -100,24 +102,67 @@ struct QRScanner: UIViewControllerRepresentable {
      
                 scanResult = result
                 
-                // if url, open it
-                if let url = URL(string: result) {
-                    if "https://" != result.prefix(8) {
-                        if let newURL = URL(string: "https://" + result) {
-                            UIApplication.shared.open(newURL)
-                        }
-                    }
-                } else {
-                    
-                }
-     
+                // handle QR Code
+                handleQRCode(result)
             }
+        }
+        
+        /*
+         text
+         URL ✅
+         Contact ✅
+         location ✅
+         wifi ✅
+         sms ✅
+         email ✅
+         call ✅
+         event ✅
+         */
+        
+        func handleQRCode(_ code: String) {
+            let scannedCode = code.lowercased()
+            // TODO: IMPLEMENT
+            if scannedCode.hasPrefix("http") || scannedCode.hasPrefix("www") || scannedCode.hasSuffix(".com") {
+                handleURL(code)
+            } else if scannedCode.hasPrefix("geo") {
+                handleLocation(code)
+            } else if scannedCode.hasPrefix("begin:vcard") {
+                handleContact(code)
+            } else if scannedCode.hasPrefix("wifi") {
+                print("THIS IS A WIFI")
+            } else if scannedCode.hasPrefix("smsto") {
+                print("THIS IS A SMS")
+            } else if scannedCode.hasPrefix("mailto") {
+                print("THIS IS AN EMAIL")
+            } 
+            // if scannedCodes containts only numbers and +
+            else if scannedCode.hasPrefix("tel") || (scannedCode.hasPrefix("+") && scannedCode.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil) || scannedCode.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil   {
+                // TODO: FIX
+                print("THIS IS A CALL")
+            } else if scannedCode.hasPrefix("begin:vevent") {
+                print("THIS IS AN EVENT")
+            } else {
+                print("THIS IS AN TEXT")
+            }
+        }
+        
+        func handleURL(_ url: String) {
+            print("THIS IS AN URL")
+        }
+        
+        func handleLocation(_ location: String) {
+            print("THIS IS A LOCATION")
+        }
+        
+        func handleContact(_ contact: String) {
+            print("THIS IS A CONTACT")
         }
     }
     
     func makeCoordinator() -> Coordinator {
         Coordinator($result)
     }
+    
     
 
 }
