@@ -108,7 +108,7 @@ struct QRScanner: UIViewControllerRepresentable {
          URL ✅
          Contact
          location ✅
-         wifi
+         wifi ✅
          sms ✅
          email ✅
          call ✅
@@ -119,7 +119,7 @@ struct QRScanner: UIViewControllerRepresentable {
             let scannedCode = code.lowercased()
             // TODO: IMPLEMENT
             if scannedCode.hasPrefix("http") || scannedCode.hasPrefix("www") || scannedCode.hasSuffix(".com") {
-                handleURL(code)
+                handleURL(scannedCode)
             } else if scannedCode.hasPrefix("geo") {
                 handleLocation(code)
             } else if scannedCode.hasPrefix("begin:vcard") {
@@ -132,7 +132,7 @@ struct QRScanner: UIViewControllerRepresentable {
                 handleEmail(code)
             }
             // if scannedCodes containts only numbers and +
-            else if scannedCode.hasPrefix("tel") || scannedCode.hasPrefix("+") || scannedCode.allSatisfy({ $0.isNumber }) {
+            else if checkIsValidPhoneNumber(scannedCode) {
                 // TODO: FIX
                 handleCall(code)
             } else if scannedCode.hasPrefix("begin:vevent") {
@@ -144,15 +144,15 @@ struct QRScanner: UIViewControllerRepresentable {
 
         func handleURL(_ url: String) {
             // MARK: ✅
-
+            var formattedURL = url
             // if url has no prefix add http:// give it
             if !url.hasPrefix("http") {
-                let formattedURL = "http://\(url)"
+                formattedURL = "https://\(url)"
                 print(formattedURL)
             }
 
             // open it
-            if let urlToOpen = URL(string: url) {
+            if let urlToOpen = URL(string: formattedURL) {
                 UIApplication.shared.open(urlToOpen)
             }
         }
@@ -244,6 +244,16 @@ struct QRScanner: UIViewControllerRepresentable {
             if let url = URL(string: email) {
                 UIApplication.shared.open(url)
             }
+        }
+        
+        // checkers
+        func checkIsValidPhoneNumber(_ code: String) -> Bool {
+            let scannedCode = code.lowercased()
+            
+            let allowedCharacters = CharacterSet(charactersIn: "+1234567890 ")
+            let characterSet = CharacterSet(charactersIn: scannedCode)
+            
+            return allowedCharacters.isSuperset(of: characterSet)
         }
     }
 
