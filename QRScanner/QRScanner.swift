@@ -111,13 +111,13 @@ struct QRScanner: UIViewControllerRepresentable {
         /*
          text
          URL ✅
-         Contact ✅
+         Contact
          location ✅
-         wifi ✅
-         sms ✅
-         email ✅
-         call ✅
-         event ✅
+         wifi
+         sms
+         email
+         call
+         event
          */
         
         func handleQRCode(_ code: String) {
@@ -130,16 +130,16 @@ struct QRScanner: UIViewControllerRepresentable {
             } else if scannedCode.hasPrefix("begin:vcard") {
                 handleContact(code)
             } else if scannedCode.hasPrefix("wifi") {
-                print("THIS IS A WIFI")
+                handleWifi(code)
             } else if scannedCode.hasPrefix("smsto") {
-                print("THIS IS A SMS")
+                handleSMS(code)
             } else if scannedCode.hasPrefix("mailto") {
                 print("THIS IS AN EMAIL")
-            } 
+            }
             // if scannedCodes containts only numbers and +
-            else if scannedCode.hasPrefix("tel") || (scannedCode.hasPrefix("+") && scannedCode.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil) || scannedCode.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil   {
+            else if scannedCode.hasPrefix("tel") || scannedCode.hasPrefix("+") || scannedCode.allSatisfy({ $0.isNumber }) {
                 // TODO: FIX
-                print("THIS IS A CALL")
+                handleCall(code)
             } else if scannedCode.hasPrefix("begin:vevent") {
                 print("THIS IS AN EVENT")
             } else {
@@ -171,8 +171,29 @@ struct QRScanner: UIViewControllerRepresentable {
             }
         }
         
+        func handleWifi(_ wifi: String) {
+            // TODO: connect wifi using wifi qr code
+            
+        }
+        
         func handleContact(_ contact: String) {
-            print("THIS IS A CONTACT")
+            // TODO: implement
+        }
+        
+        func handleCall(_ call: String) {
+            if let url = URL(string: "tel://\(call)") {
+                UIApplication.shared.open(url)
+            }
+        }
+        
+        func handleSMS(_ sms: String) {
+            let smsArray = sms.components(separatedBy: ":")
+            let number = smsArray[1]
+            let message = smsArray[2]
+            
+            if let url = URL(string: "sms:\(number)&body=\(message)") {
+                UIApplication.shared.open(url)
+            }
         }
     }
     
