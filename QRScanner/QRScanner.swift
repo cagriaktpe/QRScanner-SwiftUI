@@ -221,7 +221,33 @@ struct QRScanner: UIViewControllerRepresentable {
         }
 
         func handleContact(_ contact: String) {
-            // TODO: implement
+            if let data = contact.data(using: .utf8) {
+                let contactStore = CNContactStore()
+
+                contactStore.requestAccess(for: .contacts) { (granted, error) in
+                    if granted {
+                        do {
+                            let saveRequest = CNSaveRequest() // create saveRequests
+
+                            let contacts = try CNContactVCardSerialization.contacts(with: data) // get contacts array from vCard
+
+                            for contact in contacts {
+                                guard let mutableContact = contact.mutableCopy() as? CNMutableContact else {
+                                    continue
+                                }
+                                saveRequest.add(mutableContact, toContainerWithIdentifier: nil) // add contacts to saveRequest
+                            }
+
+                            try contactStore.execute(saveRequest) // save to contacts
+
+                        } catch {
+                            print("Unable to show the new contact") // something went wrong
+                        }
+                    } else if let error = error {
+                        print("Failed to request access: \(error)")
+                    }
+                }
+            }
         }
 
         func handleCall(_ call: String) {
