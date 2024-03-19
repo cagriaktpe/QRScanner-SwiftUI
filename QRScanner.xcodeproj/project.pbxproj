@@ -12,6 +12,8 @@
 		811DE2712BA8575A00E3D028 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 811DE2702BA8575A00E3D028 /* Assets.xcassets */; };
 		811DE2742BA8575A00E3D028 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 811DE2732BA8575A00E3D028 /* Preview Assets.xcassets */; };
 		811DE27B2BA8578000E3D028 /* QRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811DE27A2BA8577F00E3D028 /* QRScanner.swift */; };
+		81C2E14E2BA9CB9000A217F2 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C2E14D2BA9CB9000A217F2 /* TextView.swift */; };
+		81C2E1512BA9CBB700A217F2 /* SwiftUIContacts in Frameworks */ = {isa = PBXBuildFile; productRef = 81C2E1502BA9CBB700A217F2 /* SwiftUIContacts */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,7 @@
 		811DE2732BA8575A00E3D028 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		811DE27A2BA8577F00E3D028 /* QRScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanner.swift; sourceTree = "<group>"; };
 		819C66082BA9B21B0039B211 /* QRScanner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QRScanner.entitlements; sourceTree = "<group>"; };
+		81C2E14D2BA9CB9000A217F2 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +32,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81C2E1512BA9CBB700A217F2 /* SwiftUIContacts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,6 +64,7 @@
 				811DE27A2BA8577F00E3D028 /* QRScanner.swift */,
 				811DE2702BA8575A00E3D028 /* Assets.xcassets */,
 				811DE2722BA8575A00E3D028 /* Preview Content */,
+				81C2E14D2BA9CB9000A217F2 /* TextView.swift */,
 			);
 			path = QRScanner;
 			sourceTree = "<group>";
@@ -88,6 +93,9 @@
 			dependencies = (
 			);
 			name = QRScanner;
+			packageProductDependencies = (
+				81C2E1502BA9CBB700A217F2 /* SwiftUIContacts */,
+			);
 			productName = QRScanner;
 			productReference = 811DE2692BA8575800E3D028 /* QRScanner.app */;
 			productType = "com.apple.product-type.application";
@@ -116,6 +124,9 @@
 				Base,
 			);
 			mainGroup = 811DE2602BA8575800E3D028;
+			packageReferences = (
+				81C2E14F2BA9CBB700A217F2 /* XCRemoteSwiftPackageReference "SwiftUIContacts" */,
+			);
 			productRefGroup = 811DE26A2BA8575800E3D028 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -143,6 +154,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				811DE27B2BA8578000E3D028 /* QRScanner.swift in Sources */,
+				81C2E14E2BA9CB9000A217F2 /* TextView.swift in Sources */,
 				811DE26F2BA8575800E3D028 /* ContentView.swift in Sources */,
 				811DE26D2BA8575800E3D028 /* QRScannerApp.swift in Sources */,
 			);
@@ -358,6 +370,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		81C2E14F2BA9CBB700A217F2 /* XCRemoteSwiftPackageReference "SwiftUIContacts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/edonv/SwiftUIContacts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		81C2E1502BA9CBB700A217F2 /* SwiftUIContacts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 81C2E14F2BA9CBB700A217F2 /* XCRemoteSwiftPackageReference "SwiftUIContacts" */;
+			productName = SwiftUIContacts;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 811DE2612BA8575800E3D028 /* Project object */;
 }

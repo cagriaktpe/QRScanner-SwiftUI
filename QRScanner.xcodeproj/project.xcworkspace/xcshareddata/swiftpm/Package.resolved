@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "swiftuicontacts",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/edonv/SwiftUIContacts.git",
+      "state" : {
+        "revision" : "1c03c40bcb3dcb62ab1b8a6d3d3c7b678d8b8cb1",
+        "version" : "0.0.5"
+      }
+    }
+  ],
+  "version" : 2
+}
