@@ -9,6 +9,7 @@ import SwiftUI
 import AVFoundation
 import MapKit
 import Contacts
+import CoreLocation
 
 class QRScannerController: UIViewController {
     var captureSession = AVCaptureSession()
@@ -160,7 +161,14 @@ struct QRScanner: UIViewControllerRepresentable {
         }
         
         func handleLocation(_ location: String) {
-            print("THIS IS A LOCATION")
+            let locationArray = location.components(separatedBy: ",")
+            // delete geo from locationArray[0]
+            let latitude = locationArray[0].replacingOccurrences(of: "geo:", with: "")
+            let longitude = locationArray[1]
+            
+            if let url = URL(string: "http://maps.apple.com/?q=\(latitude),\(longitude)") {
+                UIApplication.shared.open(url)
+            }
         }
         
         func handleContact(_ contact: String) {
