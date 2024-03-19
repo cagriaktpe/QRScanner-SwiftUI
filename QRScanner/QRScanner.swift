@@ -147,7 +147,16 @@ struct QRScanner: UIViewControllerRepresentable {
         }
         
         func handleURL(_ url: String) {
-            print("THIS IS AN URL")
+            // if url has no prefix add http:// give it
+            if !url.hasPrefix("http") {
+                let formattedURL = "http://\(url)"
+                print(formattedURL)
+            }
+            
+            // open it
+            if let urlToOpen = URL(string: url) {
+                UIApplication.shared.open(urlToOpen)
+            }
         }
         
         func handleLocation(_ location: String) {
