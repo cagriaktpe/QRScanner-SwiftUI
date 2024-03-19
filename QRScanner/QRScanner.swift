@@ -100,6 +100,13 @@ struct QRScanner: UIViewControllerRepresentable {
 
                 // handle QR Code
                 handleQRCode(result)
+
+                // Stop the capture session
+                DispatchQueue.main.async {
+                    output.connections.forEach { connection in
+                        connection.isEnabled = false
+                    }
+                }
             }
         }
 
@@ -144,6 +151,7 @@ struct QRScanner: UIViewControllerRepresentable {
 
         func handleURL(_ url: String) {
             // MARK: ✅
+
             var formattedURL = url
             // if url has no prefix add http:// give it
             if !url.hasPrefix("http") {
@@ -178,14 +186,14 @@ struct QRScanner: UIViewControllerRepresentable {
             var ssid: String?
             var password: String?
             var securityType: String?
-            
+
             for component in components {
                 let keyValuePair = component.components(separatedBy: ":")
-                                
+
                 if keyValuePair.count == 2 {
                     let key = keyValuePair[0]
                     let value = keyValuePair[1]
-        
+
                     switch key {
                     case "S":
                         ssid = value
@@ -196,13 +204,12 @@ struct QRScanner: UIViewControllerRepresentable {
                     default:
                         break
                     }
-                    
                 }
             }
 
             if let ssid = ssid, let password = password {
                 let configuration = NEHotspotConfiguration(ssid: ssid, passphrase: password, isWEP: securityType == "WEP" ? true : false)
-                
+
                 NEHotspotConfigurationManager.shared.apply(configuration) { error in
                     if let error = error {
                         print("Error: \(error.localizedDescription)")
@@ -245,14 +252,14 @@ struct QRScanner: UIViewControllerRepresentable {
                 UIApplication.shared.open(url)
             }
         }
-        
+
         // checkers
         func checkIsValidPhoneNumber(_ code: String) -> Bool {
             let scannedCode = code.lowercased()
-            
+
             let allowedCharacters = CharacterSet(charactersIn: "+1234567890 ")
             let characterSet = CharacterSet(charactersIn: scannedCode)
-            
+
             return allowedCharacters.isSuperset(of: characterSet)
         }
     }
