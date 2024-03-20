@@ -11,6 +11,7 @@ import CoreLocation
 import MapKit
 import NetworkExtension
 import SwiftUI
+import EventKit
 
 class QRScannerController: UIViewController {
     var captureSession = AVCaptureSession()
@@ -68,6 +69,7 @@ struct QRScanner: UIViewControllerRepresentable {
     @Binding var result: String
     @Binding var scannedCodes: [String]
     @Binding var scannedContact: CNContact?
+    @Binding var scannedEvent: IdentifiableEKEvent?
 
     func makeUIViewController(context: Context) -> QRScannerController {
         let controller = QRScannerController()
@@ -83,11 +85,13 @@ struct QRScanner: UIViewControllerRepresentable {
         @Binding var scanResult: String
         @Binding var scannedCodes: [String]
         @Binding var scannedContact: CNContact?
+        @Binding var scannedEvent: IdentifiableEKEvent?
 
-        init(_ scanResult: Binding<String>, scannedCodes: Binding<[String]>, scannedContact: Binding<CNContact?>) {
+        init(_ scanResult: Binding<String>, scannedCodes: Binding<[String]>, scannedContact: Binding<CNContact?>, scannedEvent: Binding<IdentifiableEKEvent?>) {
             _scanResult = scanResult
             _scannedCodes = scannedCodes
             _scannedContact = scannedContact
+            _scannedEvent = scannedEvent
         }
 
         func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
@@ -147,10 +151,37 @@ struct QRScanner: UIViewControllerRepresentable {
                 // TODO: FIX
                 handleCall(code)
             } else if scannedCode.hasPrefix("begin:vevent") {
-                print("THIS IS AN EVENT")
+                handleEvent(code)
             } else {
                 print("THIS IS AN TEXT")
             }
+        }
+        
+        func handleEvent(_ event: String) {
+            // MARK: ✅
+            let eventStore = EKEventStore()
+            let newEvent: EKEvent = EKEvent(eventStore: eventStore)
+            let eventArray = event.components(separatedBy: "\n")
+            for line in eventArray {
+                if line.hasPrefix("SUMMARY") {
+                    newEvent.title = line.replacingOccurrences(of: "SUMMARY:", with: "")
+                } else if line.hasPrefix("DESCRIPTION") {
+                    newEvent.notes = line.replacingOccurrences(of: "DESCRIPTION:", with: "")
+                } else if line.hasPrefix("LOCATION") {
+                    newEvent.location = line.replacingOccurrences(of: "LOCATION:", with: "")
+                } else if line.hasPrefix("URL") {
+                    newEvent.url = URL(string: line.replacingOccurrences(of: "URL:", with: ""))
+                } else if line.hasPrefix("DTSTART") {
+                    let date = line.replacingOccurrences(of: "DTSTART:", with: "")
+                    newEvent.startDate = date.toDate()
+                } else if line.hasPrefix("DTEND") {
+                    let date = line.replacingOccurrences(of: "DTEND:", with: "")
+                    newEvent.endDate = date.toDate()
+                }
+            }
+            scannedEvent = IdentifiableEKEvent(event: newEvent)
+            
+            
         }
 
         func handleURL(_ url: String) {
@@ -280,6 +311,6 @@ struct QRScanner: UIViewControllerRepresentable {
     }
 
     func makeCoordinator() -> Coordinator {
-        Coordinator($result, scannedCodes: $scannedCodes, scannedContact: $scannedContact)
+        Coordinator($result, scannedCodes: $scannedCodes, scannedContact: $scannedContact, scannedEvent: $scannedEvent)
     }
 }

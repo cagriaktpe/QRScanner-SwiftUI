@@ -14,6 +14,10 @@
 		811DE27B2BA8578000E3D028 /* QRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811DE27A2BA8577F00E3D028 /* QRScanner.swift */; };
 		814F7FCB2BAAD5F700A20BFD /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814F7FCA2BAAD5F700A20BFD /* ContactManager.swift */; };
 		814F7FCD2BAAD80100A20BFD /* ContactDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814F7FCC2BAAD80100A20BFD /* ContactDetailView.swift */; };
+		814F7FCF2BAADBB300A20BFD /* AddEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814F7FCE2BAADBB300A20BFD /* AddEventController.swift */; };
+		814F7FD12BAADC0000A20BFD /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814F7FD02BAADC0000A20BFD /* TestView.swift */; };
+		814F7FD32BAAED5800A20BFD /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814F7FD22BAAED5800A20BFD /* Extension.swift */; };
+		814F7FD52BAAF0F000A20BFD /* IdentifiableEKEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814F7FD42BAAF0F000A20BFD /* IdentifiableEKEvent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +29,10 @@
 		811DE27A2BA8577F00E3D028 /* QRScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanner.swift; sourceTree = "<group>"; };
 		814F7FCA2BAAD5F700A20BFD /* ContactManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
 		814F7FCC2BAAD80100A20BFD /* ContactDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailView.swift; sourceTree = "<group>"; };
+		814F7FCE2BAADBB300A20BFD /* AddEventController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventController.swift; sourceTree = "<group>"; };
+		814F7FD02BAADC0000A20BFD /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		814F7FD22BAAED5800A20BFD /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		814F7FD42BAAF0F000A20BFD /* IdentifiableEKEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableEKEvent.swift; sourceTree = "<group>"; };
 		819C66082BA9B21B0039B211 /* QRScanner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QRScanner.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -66,6 +74,10 @@
 				811DE2702BA8575A00E3D028 /* Assets.xcassets */,
 				811DE2722BA8575A00E3D028 /* Preview Content */,
 				814F7FCA2BAAD5F700A20BFD /* ContactManager.swift */,
+				814F7FCE2BAADBB300A20BFD /* AddEventController.swift */,
+				814F7FD02BAADC0000A20BFD /* TestView.swift */,
+				814F7FD22BAAED5800A20BFD /* Extension.swift */,
+				814F7FD42BAAF0F000A20BFD /* IdentifiableEKEvent.swift */,
 			);
 			path = QRScanner;
 			sourceTree = "<group>";
@@ -148,11 +160,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				814F7FD12BAADC0000A20BFD /* TestView.swift in Sources */,
+				814F7FCF2BAADBB300A20BFD /* AddEventController.swift in Sources */,
+				814F7FD52BAAF0F000A20BFD /* IdentifiableEKEvent.swift in Sources */,
 				811DE27B2BA8578000E3D028 /* QRScanner.swift in Sources */,
 				811DE26F2BA8575800E3D028 /* ContentView.swift in Sources */,
 				814F7FCB2BAAD5F700A20BFD /* ContactManager.swift in Sources */,
 				811DE26D2BA8575800E3D028 /* QRScannerApp.swift in Sources */,
 				814F7FCD2BAAD80100A20BFD /* ContactDetailView.swift in Sources */,
+				814F7FD32BAAED5800A20BFD /* Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,6 +307,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QRScanner/Info.plist;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "we use your calendars";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need to access your camera for scanning QR code.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "We use your contacts";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -324,6 +341,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QRScanner/Info.plist;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "we use your calendars";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need to access your camera for scanning QR code.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "We use your contacts";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
