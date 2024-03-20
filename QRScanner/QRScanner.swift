@@ -7,8 +7,6 @@
 
 import AVFoundation
 import Contacts
-import CoreLocation
-import MapKit
 import NetworkExtension
 import SwiftUI
 import EventKit
@@ -67,7 +65,7 @@ class QRScannerController: UIViewController {
 
 struct QRScanner: UIViewControllerRepresentable {
     @Binding var result: String
-    @Binding var scannedCodes: [String]
+    @State var scannedCodes: [String] = []
     @Binding var scannedContact: CNContact?
     @Binding var scannedEvent: IdentifiableEKEvent?
     @Binding var scannedText: String?

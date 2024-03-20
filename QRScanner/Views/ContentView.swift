@@ -12,7 +12,6 @@ import EventKit
 struct ContentView: View {
     @Environment(\.dismiss) var dismiss
     @State var scanResult = "No QR code detected"
-    @State var scannedCodes = [String]()
     @State var event: IdentifiableEKEvent?
     @State var scannedContact: CNContact?
     @State var scannedText: String?
@@ -21,7 +20,7 @@ struct ContentView: View {
         NavigationStack {
             ZStack(alignment: .bottom) {
                 
-                QRScanner(result: $scanResult, scannedCodes: $scannedCodes, scannedContact: $scannedContact, scannedEvent: $event, scannedText: $scannedText)
+                QRScanner(result: $scanResult, scannedContact: $scannedContact, scannedEvent: $event, scannedText: $scannedText)
                     
      
                 Text(scanResult)

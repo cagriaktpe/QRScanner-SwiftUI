@@ -68,8 +68,9 @@
 		811DE26B2BA8575800E3D028 /* QRScanner */ = {
 			isa = PBXGroup;
 			children = (
-				81596D9C2BAB10F300A95891 /* Views */,
+				81596D9D2BAB111100A95891 /* Helpers */,
 				81596D9B2BAB10EC00A95891 /* Models */,
+				81596D9C2BAB10F300A95891 /* Views */,
 				819C66082BA9B21B0039B211 /* QRScanner.entitlements */,
 				811DE26C2BA8575800E3D028 /* QRScannerApp.swift */,
 				811DE27A2BA8577F00E3D028 /* QRScanner.swift */,
@@ -107,6 +108,13 @@
 				814F7FCC2BAAD80100A20BFD /* ContactDetailView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		81596D9D2BAB111100A95891 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
