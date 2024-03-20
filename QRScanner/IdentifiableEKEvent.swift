@@ -8,7 +8,7 @@
 import Foundation
 import EventKit
 
-struct IdentifiableEKEvent: Identifiable {
+struct IdentifiableEKEvent: Identifiable, Hashable {
     var id: String = UUID().uuidString
     let event: EKEvent
 }

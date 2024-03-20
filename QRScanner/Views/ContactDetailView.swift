@@ -39,12 +39,6 @@ struct ContactDetailView: View {
                 
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel") {
-                        dismiss()
-                    }
-                }
-                
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
                         ContactManager.saveContact(contact: scannedContact!)

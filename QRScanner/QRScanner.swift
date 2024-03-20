@@ -70,6 +70,7 @@ struct QRScanner: UIViewControllerRepresentable {
     @Binding var scannedCodes: [String]
     @Binding var scannedContact: CNContact?
     @Binding var scannedEvent: IdentifiableEKEvent?
+    @Binding var scannedText: String?
 
     func makeUIViewController(context: Context) -> QRScannerController {
         let controller = QRScannerController()
@@ -86,12 +87,14 @@ struct QRScanner: UIViewControllerRepresentable {
         @Binding var scannedCodes: [String]
         @Binding var scannedContact: CNContact?
         @Binding var scannedEvent: IdentifiableEKEvent?
+        @Binding var scannedText: String?
 
-        init(_ scanResult: Binding<String>, scannedCodes: Binding<[String]>, scannedContact: Binding<CNContact?>, scannedEvent: Binding<IdentifiableEKEvent?>) {
+        init(_ scanResult: Binding<String>, scannedCodes: Binding<[String]>, scannedContact: Binding<CNContact?>, scannedEvent: Binding<IdentifiableEKEvent?>, scannedText: Binding<String?>) {
             _scanResult = scanResult
             _scannedCodes = scannedCodes
             _scannedContact = scannedContact
             _scannedEvent = scannedEvent
+            _scannedText = scannedText
         }
 
         func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
@@ -153,7 +156,7 @@ struct QRScanner: UIViewControllerRepresentable {
             } else if scannedCode.hasPrefix("begin:vevent") {
                 handleEvent(code)
             } else {
-                print("THIS IS AN TEXT")
+                handleText(code)
             }
         }
         
@@ -182,6 +185,11 @@ struct QRScanner: UIViewControllerRepresentable {
             scannedEvent = IdentifiableEKEvent(event: newEvent)
             
             
+        }
+        
+        func handleText(_ text: String) {
+            // MARK: ✅
+            scannedText = text
         }
 
         func handleURL(_ url: String) {
@@ -311,6 +319,6 @@ struct QRScanner: UIViewControllerRepresentable {
     }
 
     func makeCoordinator() -> Coordinator {
-        Coordinator($result, scannedCodes: $scannedCodes, scannedContact: $scannedContact, scannedEvent: $scannedEvent)
+        Coordinator($result, scannedCodes: $scannedCodes, scannedContact: $scannedContact, scannedEvent: $scannedEvent, scannedText: $scannedText)
     }
 }
