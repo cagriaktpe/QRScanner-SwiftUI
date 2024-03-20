@@ -66,6 +66,7 @@ class QRScannerController: UIViewController {
 
 struct QRScanner: UIViewControllerRepresentable {
     @Binding var result: String
+    @Binding var scannedCodes: [String]
 
     func makeUIViewController(context: Context) -> QRScannerController {
         let controller = QRScannerController()
@@ -79,9 +80,12 @@ struct QRScanner: UIViewControllerRepresentable {
 
     class Coordinator: NSObject, AVCaptureMetadataOutputObjectsDelegate {
         @Binding var scanResult: String
+        @Binding var scannedCodes: [String]
+        
 
-        init(_ scanResult: Binding<String>) {
+        init(_ scanResult: Binding<String>, scannedCodes: Binding<[String]>) {
             _scanResult = scanResult
+            _scannedCodes = scannedCodes
         }
 
         func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
@@ -97,16 +101,14 @@ struct QRScanner: UIViewControllerRepresentable {
             if metadataObj.type == AVMetadataObject.ObjectType.qr,
                let result = metadataObj.stringValue {
                 scanResult = result
-
-                // handle QR Code
-                handleQRCode(result)
-
-                // Stop the capture session
-                DispatchQueue.main.async {
-                    output.connections.forEach { connection in
-                        connection.isEnabled = false
-                    }
+                
+                if scannedCodes.contains(scanResult) {
+                    return
                 }
+                
+                scannedCodes.append(result)
+                handleQRCode(result)
+                
             }
         }
 
@@ -291,6 +293,6 @@ struct QRScanner: UIViewControllerRepresentable {
     }
 
     func makeCoordinator() -> Coordinator {
-        Coordinator($result)
+        Coordinator($result, scannedCodes: $scannedCodes)
     }
 }

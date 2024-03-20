@@ -9,11 +9,12 @@ import SwiftUI
 
 struct ContentView: View {
     @State var scanResult = "No QR code detected"
+    @State var scannedCodes = [String]()
  
     var body: some View {
         ZStack(alignment: .bottom) {
             
-            QRScanner(result: $scanResult)
+            QRScanner(result: $scanResult, scannedCodes: $scannedCodes)
  
             Text(scanResult)
                 .padding()
