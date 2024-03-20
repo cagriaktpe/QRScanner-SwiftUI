@@ -15,8 +15,7 @@
 		814F7FCB2BAAD5F700A20BFD /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814F7FCA2BAAD5F700A20BFD /* ContactManager.swift */; };
 		814F7FCD2BAAD80100A20BFD /* ContactDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814F7FCC2BAAD80100A20BFD /* ContactDetailView.swift */; };
 		814F7FCF2BAADBB300A20BFD /* AddEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814F7FCE2BAADBB300A20BFD /* AddEventController.swift */; };
-		814F7FD12BAADC0000A20BFD /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814F7FD02BAADC0000A20BFD /* TestView.swift */; };
-		814F7FD32BAAED5800A20BFD /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814F7FD22BAAED5800A20BFD /* Extension.swift */; };
+		814F7FD32BAAED5800A20BFD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814F7FD22BAAED5800A20BFD /* Extensions.swift */; };
 		814F7FD52BAAF0F000A20BFD /* IdentifiableEKEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814F7FD42BAAF0F000A20BFD /* IdentifiableEKEvent.swift */; };
 		814F7FD72BAB076300A20BFD /* ScannedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814F7FD62BAB076300A20BFD /* ScannedTextView.swift */; };
 /* End PBXBuildFile section */
@@ -31,8 +30,7 @@
 		814F7FCA2BAAD5F700A20BFD /* ContactManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
 		814F7FCC2BAAD80100A20BFD /* ContactDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailView.swift; sourceTree = "<group>"; };
 		814F7FCE2BAADBB300A20BFD /* AddEventController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventController.swift; sourceTree = "<group>"; };
-		814F7FD02BAADC0000A20BFD /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
-		814F7FD22BAAED5800A20BFD /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		814F7FD22BAAED5800A20BFD /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		814F7FD42BAAF0F000A20BFD /* IdentifiableEKEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableEKEvent.swift; sourceTree = "<group>"; };
 		814F7FD62BAB076300A20BFD /* ScannedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedTextView.swift; sourceTree = "<group>"; };
 		819C66082BA9B21B0039B211 /* QRScanner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QRScanner.entitlements; sourceTree = "<group>"; };
@@ -73,15 +71,9 @@
 				81596D9C2BAB10F300A95891 /* Views */,
 				819C66082BA9B21B0039B211 /* QRScanner.entitlements */,
 				811DE26C2BA8575800E3D028 /* QRScannerApp.swift */,
-				811DE27A2BA8577F00E3D028 /* QRScanner.swift */,
 				811DE2702BA8575A00E3D028 /* Assets.xcassets */,
 				811DE2722BA8575A00E3D028 /* Preview Content */,
-				814F7FCA2BAAD5F700A20BFD /* ContactManager.swift */,
-				814F7FCE2BAADBB300A20BFD /* AddEventController.swift */,
-				814F7FD02BAADC0000A20BFD /* TestView.swift */,
-				814F7FD22BAAED5800A20BFD /* Extension.swift */,
-				814F7FD42BAAF0F000A20BFD /* IdentifiableEKEvent.swift */,
-				814F7FD62BAB076300A20BFD /* ScannedTextView.swift */,
+				814F7FD22BAAED5800A20BFD /* Extensions.swift */,
 			);
 			path = QRScanner;
 			sourceTree = "<group>";
@@ -97,6 +89,7 @@
 		81596D9B2BAB10EC00A95891 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				814F7FD42BAAF0F000A20BFD /* IdentifiableEKEvent.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -106,6 +99,7 @@
 			children = (
 				811DE26E2BA8575800E3D028 /* ContentView.swift */,
 				814F7FCC2BAAD80100A20BFD /* ContactDetailView.swift */,
+				814F7FD62BAB076300A20BFD /* ScannedTextView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -113,6 +107,9 @@
 		81596D9D2BAB111100A95891 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				814F7FCA2BAAD5F700A20BFD /* ContactManager.swift */,
+				811DE27A2BA8577F00E3D028 /* QRScanner.swift */,
+				814F7FCE2BAADBB300A20BFD /* AddEventController.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -187,7 +184,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				814F7FD12BAADC0000A20BFD /* TestView.swift in Sources */,
 				814F7FCF2BAADBB300A20BFD /* AddEventController.swift in Sources */,
 				814F7FD52BAAF0F000A20BFD /* IdentifiableEKEvent.swift in Sources */,
 				811DE27B2BA8578000E3D028 /* QRScanner.swift in Sources */,
@@ -196,7 +192,7 @@
 				814F7FD72BAB076300A20BFD /* ScannedTextView.swift in Sources */,
 				811DE26D2BA8575800E3D028 /* QRScannerApp.swift in Sources */,
 				814F7FCD2BAAD80100A20BFD /* ContactDetailView.swift in Sources */,
-				814F7FD32BAAED5800A20BFD /* Extension.swift in Sources */,
+				814F7FD32BAAED5800A20BFD /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -96,7 +96,6 @@ struct QRScanner: UIViewControllerRepresentable {
         }
 
         func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-            // Check if the metadataObjects array is not nil and it contains at least one object.
             if metadataObjects.count == 0 {
                 scanResult = "No QR code detected"
                 return
@@ -119,22 +118,9 @@ struct QRScanner: UIViewControllerRepresentable {
             }
         }
 
-        /*
-         text
-         URL ✅
-         Contact ✅
-         location ✅
-         wifi ✅
-         sms ✅
-         email ✅
-         call ✅
-         event
-         */
-
         func handleQRCode(_ code: String) {
             let scannedCode = code.lowercased()
-            // TODO: IMPLEMENT
-            if scannedCode.hasPrefix("http") || scannedCode.hasPrefix("www") || scannedCode.hasSuffix(".com") {
+            if checkIsValidURL(scannedCode) {
                 handleURL(scannedCode)
             } else if scannedCode.hasPrefix("geo") {
                 handleLocation(code)
@@ -146,10 +132,7 @@ struct QRScanner: UIViewControllerRepresentable {
                 handleSMS(code)
             } else if scannedCode.hasPrefix("mailto") {
                 handleEmail(code)
-            }
-            // if scannedCodes containts only numbers and +
-            else if checkIsValidPhoneNumber(scannedCode) {
-                // TODO: FIX
+            } else if checkIsValidPhoneNumber(scannedCode) {
                 handleCall(code)
             } else if scannedCode.hasPrefix("begin:vevent") {
                 handleEvent(code)
@@ -159,7 +142,6 @@ struct QRScanner: UIViewControllerRepresentable {
         }
         
         func handleEvent(_ event: String) {
-            // MARK: ✅
             let eventStore = EKEventStore()
             let newEvent: EKEvent = EKEvent(eventStore: eventStore)
             let eventArray = event.components(separatedBy: "\n")
@@ -181,18 +163,13 @@ struct QRScanner: UIViewControllerRepresentable {
                 }
             }
             scannedEvent = IdentifiableEKEvent(event: newEvent)
-            
-            
         }
         
         func handleText(_ text: String) {
-            // MARK: ✅
             scannedText = text
         }
 
         func handleURL(_ url: String) {
-            // MARK: ✅
-
             var formattedURL = url
             // if url has no prefix add http:// give it
             if !url.hasPrefix("http") {
@@ -207,8 +184,6 @@ struct QRScanner: UIViewControllerRepresentable {
         }
 
         func handleLocation(_ location: String) {
-            // MARK: ✅
-
             let locationArray = location.components(separatedBy: ",")
             // delete geo from locationArray[0]
             let latitude = locationArray[0].replacingOccurrences(of: "geo:", with: "")
@@ -220,7 +195,6 @@ struct QRScanner: UIViewControllerRepresentable {
         }
 
         func handleWifi(_ wifi: String) {
-            // TODO: connect wifi using wifi qr code
             // connect to wifi with given string format is WIFI:S:<SSID>;T:<WEP|WPA|blank>;P:<PASSWORD>;H:<true|false|blank>;
             let wifiCode = wifi.replacingOccurrences(of: "WIFI:", with: "")
             let components = wifiCode.components(separatedBy: ";")
@@ -277,16 +251,12 @@ struct QRScanner: UIViewControllerRepresentable {
         }
 
         func handleCall(_ call: String) {
-            // MARK: ✅
-
             if let url = URL(string: "tel://\(call)") {
                 UIApplication.shared.open(url)
             }
         }
 
         func handleSMS(_ sms: String) {
-            // MARK: ✅
-
             let smsArray = sms.components(separatedBy: ":")
             let number = smsArray[1]
             let message = smsArray[2]
@@ -313,6 +283,11 @@ struct QRScanner: UIViewControllerRepresentable {
             let characterSet = CharacterSet(charactersIn: scannedCode)
 
             return allowedCharacters.isSuperset(of: characterSet)
+        }
+        
+        func checkIsValidURL(_ code: String) -> Bool {
+            let scannedCode = code.lowercased()
+            return scannedCode.hasPrefix("http") || scannedCode.hasPrefix("https") || scannedCode.hasPrefix("www") || scannedCode.hasSuffix(".com") || scannedCode.hasSuffix(".net") || scannedCode.hasSuffix(".org")
         }
     }
 
