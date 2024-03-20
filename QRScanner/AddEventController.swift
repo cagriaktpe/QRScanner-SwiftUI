@@ -52,6 +52,11 @@ class AddEventController: UIViewController, EKEventEditViewDelegate {
         controller.event = event
         controller.eventStore = eventStore
         controller.editViewDelegate = self
+
+        
+        
+        
+        controller.modalPresentationStyle = .currentContext
         present(controller, animated: true, completion: nil)
         
         
