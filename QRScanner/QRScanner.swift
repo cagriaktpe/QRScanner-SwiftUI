@@ -67,6 +67,7 @@ class QRScannerController: UIViewController {
 struct QRScanner: UIViewControllerRepresentable {
     @Binding var result: String
     @Binding var scannedCodes: [String]
+    @Binding var scannedContact: CNContact?
 
     func makeUIViewController(context: Context) -> QRScannerController {
         let controller = QRScannerController()
@@ -81,11 +82,12 @@ struct QRScanner: UIViewControllerRepresentable {
     class Coordinator: NSObject, AVCaptureMetadataOutputObjectsDelegate {
         @Binding var scanResult: String
         @Binding var scannedCodes: [String]
-        
+        @Binding var scannedContact: CNContact?
 
-        init(_ scanResult: Binding<String>, scannedCodes: Binding<[String]>) {
+        init(_ scanResult: Binding<String>, scannedCodes: Binding<[String]>, scannedContact: Binding<CNContact?>) {
             _scanResult = scanResult
             _scannedCodes = scannedCodes
+            _scannedContact = scannedContact
         }
 
         func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
@@ -115,7 +117,7 @@ struct QRScanner: UIViewControllerRepresentable {
         /*
          text
          URL ✅
-         Contact
+         Contact ✅
          location ✅
          wifi ✅
          sms ✅
@@ -224,30 +226,15 @@ struct QRScanner: UIViewControllerRepresentable {
 
         func handleContact(_ contact: String) {
             if let data = contact.data(using: .utf8) {
-                let contactStore = CNContactStore()
+                do {
+                    let contacts = try CNContactVCardSerialization.contacts(with: data) // get contacts array from vCard
 
-                contactStore.requestAccess(for: .contacts) { (granted, error) in
-                    if granted {
-                        do {
-                            let saveRequest = CNSaveRequest() // create saveRequests
-
-                            let contacts = try CNContactVCardSerialization.contacts(with: data) // get contacts array from vCard
-
-                            for contact in contacts {
-                                guard let mutableContact = contact.mutableCopy() as? CNMutableContact else {
-                                    continue
-                                }
-                                saveRequest.add(mutableContact, toContainerWithIdentifier: nil) // add contacts to saveRequest
-                            }
-
-                            try contactStore.execute(saveRequest) // save to contacts
-
-                        } catch {
-                            print("Unable to show the new contact") // something went wrong
-                        }
-                    } else if let error = error {
-                        print("Failed to request access: \(error)")
+                    if let firstContact = contacts.first {
+                        scannedContact = firstContact
                     }
+
+                } catch {
+                    print("Unable to parse the contact") // something went wrong
                 }
             }
         }
@@ -293,6 +280,6 @@ struct QRScanner: UIViewControllerRepresentable {
     }
 
     func makeCoordinator() -> Coordinator {
-        Coordinator($result, scannedCodes: $scannedCodes)
+        Coordinator($result, scannedCodes: $scannedCodes, scannedContact: $scannedContact)
     }
 }

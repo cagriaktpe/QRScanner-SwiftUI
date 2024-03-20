@@ -12,6 +12,8 @@
 		811DE2712BA8575A00E3D028 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 811DE2702BA8575A00E3D028 /* Assets.xcassets */; };
 		811DE2742BA8575A00E3D028 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 811DE2732BA8575A00E3D028 /* Preview Assets.xcassets */; };
 		811DE27B2BA8578000E3D028 /* QRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811DE27A2BA8577F00E3D028 /* QRScanner.swift */; };
+		814F7FCB2BAAD5F700A20BFD /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814F7FCA2BAAD5F700A20BFD /* ContactManager.swift */; };
+		814F7FCD2BAAD80100A20BFD /* ContactDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814F7FCC2BAAD80100A20BFD /* ContactDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +23,8 @@
 		811DE2702BA8575A00E3D028 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		811DE2732BA8575A00E3D028 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		811DE27A2BA8577F00E3D028 /* QRScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanner.swift; sourceTree = "<group>"; };
+		814F7FCA2BAAD5F700A20BFD /* ContactManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
+		814F7FCC2BAAD80100A20BFD /* ContactDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailView.swift; sourceTree = "<group>"; };
 		819C66082BA9B21B0039B211 /* QRScanner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QRScanner.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -57,9 +61,11 @@
 				819C66082BA9B21B0039B211 /* QRScanner.entitlements */,
 				811DE26C2BA8575800E3D028 /* QRScannerApp.swift */,
 				811DE26E2BA8575800E3D028 /* ContentView.swift */,
+				814F7FCC2BAAD80100A20BFD /* ContactDetailView.swift */,
 				811DE27A2BA8577F00E3D028 /* QRScanner.swift */,
 				811DE2702BA8575A00E3D028 /* Assets.xcassets */,
 				811DE2722BA8575A00E3D028 /* Preview Content */,
+				814F7FCA2BAAD5F700A20BFD /* ContactManager.swift */,
 			);
 			path = QRScanner;
 			sourceTree = "<group>";
@@ -144,7 +150,9 @@
 			files = (
 				811DE27B2BA8578000E3D028 /* QRScanner.swift in Sources */,
 				811DE26F2BA8575800E3D028 /* ContentView.swift in Sources */,
+				814F7FCB2BAAD5F700A20BFD /* ContactManager.swift in Sources */,
 				811DE26D2BA8575800E3D028 /* QRScannerApp.swift in Sources */,
+				814F7FCD2BAAD80100A20BFD /* ContactDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
