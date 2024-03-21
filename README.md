@@ -20,3 +20,5 @@
 <p><b>IMPORANT:</b> Tests have not been <b>WRITTEN</b> yet, so it may not work all the time.</p>
 
 <p>It is free the use, enjoy!</p>
+
+<a href="/gif/awesome-xd-LOl9nh" title="Awesome xd"><img src="https://i.makeagif.com/media/3-20-2024/LOl9nh.gif" alt="Awesome xd"></a><div style="font-size:11px;"> <a href="/" title="make a gif"></div>
