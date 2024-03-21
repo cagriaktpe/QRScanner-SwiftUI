@@ -23,53 +23,42 @@ struct ContentView: View {
     @State var scannedText: String?
 
     var body: some View {
-        NavigationStack {
-            ZStack(alignment: .bottom) {
-                QRScanner(result: $scanResult, scannedContact: $scannedContact, scannedEvent: $scannedEvent, scannedText: $scannedText)
+        GeometryReader { geo in
+            NavigationStack {
+                ZStack(alignment: .bottom) {
+                    QRScanner(result: $scanResult, scannedContact: $scannedContact, scannedEvent: $scannedEvent, scannedText: $scannedText)
 
-                Rectangle()
-                    .ignoresSafeArea()
-                    .foregroundStyle(.ultraThinMaterial)
-                    .frame(height: 100)
-                    .overlay {
-                        // put the overLay right corner
-                        VStack {
-                            overlayLayer
-                                .overlay {
-                                    Rectangle()
-                                        .fill(.thinMaterial)
-                                        .mask(overlayLayer)
-                                        .allowsHitTesting(false)
+                    overlayLayer
+                        
+                        .frame(width: geo.size.width, height: 100, alignment: .bottomTrailing)
+                        
+                    
+                }
+                .navigationDestination(item: $scannedText) { text in
+                    ScannedTextView(text: text)
+                }
+                .navigationDestination(item: $scannedContact) { _ in
+                    ContactDetailView(scannedContact: $scannedContact)
+                }
+                .navigationDestination(item: $scannedEvent) { _ in
+                    AddEvent(scannedEvent: $scannedEvent)
+                }
+                .task(id: selectedPhoto) {
+                    if let data = try? await selectedPhoto?.loadTransferable(type: Data.self) {
+                        image = data
+                        detectQRCode(UIImage(data: data))?.forEach { feature in
+                            if let qrFeature = feature as? CIQRCodeFeature {
+                                if let scanResult = qrFeature.messageString {
+                                    qrCodeHandler?.handleQRCode(scanResult)
                                 }
-                        }
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                        .padding(.trailing)
-                        .padding(.top)
-                    }
-            }
-            .navigationDestination(item: $scannedText) { text in
-                ScannedTextView(text: text)
-            }
-            .navigationDestination(item: $scannedContact) { _ in
-                ContactDetailView(scannedContact: $scannedContact)
-            }
-            .navigationDestination(item: $scannedEvent) { event in
-                AddEvent(scannedEvent: $scannedEvent)
-            }
-            .task(id: selectedPhoto) {
-                if let data = try? await selectedPhoto?.loadTransferable(type: Data.self) {
-                    image = data
-                    detectQRCode(UIImage(data: data))?.forEach { feature in
-                        if let qrFeature = feature as? CIQRCodeFeature {
-                            if let scanResult = qrFeature.messageString {
-                                qrCodeHandler?.handleQRCode(scanResult)
                             }
                         }
                     }
                 }
-            }
-            .onAppear {
-                self.qrCodeHandler = QRCodeHandler(scannedContact: $scannedContact, scannedEvent: $scannedEvent, scannedText: $scannedText)
+                .onAppear {
+                    self.qrCodeHandler = QRCodeHandler(scannedContact: $scannedContact, scannedEvent: $scannedEvent, scannedText: $scannedText)
+                }
+                .ignoresSafeArea()
             }
         }
     }
@@ -78,10 +67,17 @@ struct ContentView: View {
         PhotosPicker(selection: $selectedPhoto,
                      matching: .images,
                      photoLibrary: .shared()) {
-            Image(systemName: "photo.circle.fill")
+            Image(systemName: "photo.fill")
                 .resizable()
-                .frame(width: 50, height: 50)
+                .scaledToFit()
+                .frame(width: 30, height: 30)
+                .padding()
+                
         }
+        .background(Color(UIColor.secondarySystemBackground))
+        .cornerRadius(30)
+        .shadow(radius: 10)
+        .padding()
     }
 }
 
