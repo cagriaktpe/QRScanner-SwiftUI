@@ -18,6 +18,7 @@
 		814F7FD32BAAED5800A20BFD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814F7FD22BAAED5800A20BFD /* Extensions.swift */; };
 		814F7FD52BAAF0F000A20BFD /* IdentifiableEKEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814F7FD42BAAF0F000A20BFD /* IdentifiableEKEvent.swift */; };
 		814F7FD72BAB076300A20BFD /* ScannedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814F7FD62BAB076300A20BFD /* ScannedTextView.swift */; };
+		81596DA12BAC272200A95891 /* QRCodeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81596DA02BAC272200A95891 /* QRCodeHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		814F7FD22BAAED5800A20BFD /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		814F7FD42BAAF0F000A20BFD /* IdentifiableEKEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableEKEvent.swift; sourceTree = "<group>"; };
 		814F7FD62BAB076300A20BFD /* ScannedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedTextView.swift; sourceTree = "<group>"; };
+		81596DA02BAC272200A95891 /* QRCodeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeHandler.swift; sourceTree = "<group>"; };
 		819C66082BA9B21B0039B211 /* QRScanner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QRScanner.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -107,6 +109,7 @@
 		81596D9D2BAB111100A95891 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				81596DA02BAC272200A95891 /* QRCodeHandler.swift */,
 				814F7FCA2BAAD5F700A20BFD /* ContactManager.swift */,
 				811DE27A2BA8577F00E3D028 /* QRScanner.swift */,
 				814F7FCE2BAADBB300A20BFD /* AddEventController.swift */,
@@ -188,6 +191,7 @@
 				814F7FD52BAAF0F000A20BFD /* IdentifiableEKEvent.swift in Sources */,
 				811DE27B2BA8578000E3D028 /* QRScanner.swift in Sources */,
 				811DE26F2BA8575800E3D028 /* ContentView.swift in Sources */,
+				81596DA12BAC272200A95891 /* QRCodeHandler.swift in Sources */,
 				814F7FCB2BAAD5F700A20BFD /* ContactManager.swift in Sources */,
 				814F7FD72BAB076300A20BFD /* ScannedTextView.swift in Sources */,
 				811DE26D2BA8575800E3D028 /* QRScannerApp.swift in Sources */,
