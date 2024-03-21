@@ -334,6 +334,7 @@
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "we use your calendars";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need to access your camera for scanning QR code.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "We use your contacts";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need to acces your photo library";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -368,6 +369,7 @@
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "we use your calendars";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need to access your camera for scanning QR code.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "We use your contacts";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need to acces your photo library";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
