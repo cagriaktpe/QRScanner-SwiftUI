@@ -13,6 +13,8 @@ import SwiftUI
 struct ContentView: View {
     @Environment(\.dismiss) var dismiss
     @State var scanResult = "No QR code detected"
+    @State var scannedCodes: [String] = []
+    
     @State var image: Data?
     @State var selectedPhoto: PhotosPickerItem?
     @State var qrCodeHandler: QRCodeHandler?
@@ -26,13 +28,10 @@ struct ContentView: View {
         GeometryReader { geo in
             NavigationStack {
                 ZStack(alignment: .bottom) {
-                    QRScanner(result: $scanResult, scannedContact: $scannedContact, scannedEvent: $scannedEvent, scannedText: $scannedText)
+                    QRScanner(result: $scanResult, scannedCodes: $scannedCodes, scannedContact: $scannedContact, scannedEvent: $scannedEvent, scannedText: $scannedText)
 
-                    overlayLayer
-                        
-                        .frame(width: geo.size.width, height: 100, alignment: .bottomTrailing)
-                        
-                    
+                    buttonsLayer
+
                 }
                 .navigationDestination(item: $scannedText) { text in
                     ScannedTextView(text: text)
@@ -62,8 +61,18 @@ struct ContentView: View {
             }
         }
     }
+    
+    var buttonsLayer: some View {
+        VStack(spacing: 20) {
+            scannedQRLayer
+            photoPickerLayer
+        }
+        .frame(maxWidth: .infinity, alignment: .trailing)
+        .frame(maxHeight: .infinity, alignment: .bottom)
+        .padding()
+    }
 
-    var overlayLayer: some View {
+    var photoPickerLayer: some View {
         PhotosPicker(selection: $selectedPhoto,
                      matching: .images,
                      photoLibrary: .shared()) {
@@ -77,7 +86,24 @@ struct ContentView: View {
         .background(Color(UIColor.secondarySystemBackground))
         .cornerRadius(30)
         .shadow(radius: 10)
-        .padding()
+    }
+    
+    var scannedQRLayer: some View {
+        Button {
+            if let code = scannedCodes.last {
+                qrCodeHandler?.handleQRCode(code)
+            }
+        } label: {
+            Image(systemName: "qrcode")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 30, height: 30)
+                .padding()
+        }
+        .background(Color(UIColor.secondarySystemBackground))
+        .cornerRadius(30)
+        .shadow(radius: 10)
+        .disabled(scannedCodes.isEmpty)
     }
 }
 
@@ -94,6 +120,7 @@ extension ContentView {
                 options = [CIDetectorImageOrientation: 1]
             }
             let features = qrDetector?.features(in: ciImage, options: options)
+            scannedCodes.append(contentsOf: features?.compactMap { ($0 as? CIQRCodeFeature)?.messageString } ?? [])
             return features
         }
         return nil

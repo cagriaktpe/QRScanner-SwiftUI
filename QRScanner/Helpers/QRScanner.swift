@@ -63,7 +63,7 @@ class QRScannerController: UIViewController {
 
 struct QRScanner: UIViewControllerRepresentable {
     @Binding var result: String
-    @State var scannedCodes: [String] = []
+    @Binding var scannedCodes: [String]
     @Binding var scannedContact: CNContact?
     @Binding var scannedEvent: IdentifiableEKEvent?
     @Binding var scannedText: String?
