@@ -115,7 +115,6 @@ struct QRScanner: UIViewControllerRepresentable {
                 
                 scannedCodes.append(result)
                 qrCodeHandler.handleQRCode(result)
-                
             }
         }
 

@@ -15,16 +15,17 @@ struct ContentView: View {
     @State var scanResult = "No QR code detected"
     @State var image: Data?
     @State var selectedPhoto: PhotosPickerItem?
+    @State var qrCodeHandler: QRCodeHandler?
 
     // for navigations
-    @State var event: IdentifiableEKEvent?
+    @State var scannedEvent: IdentifiableEKEvent?
     @State var scannedContact: CNContact?
     @State var scannedText: String?
 
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
-                QRScanner(result: $scanResult, scannedContact: $scannedContact, scannedEvent: $event, scannedText: $scannedText)
+                QRScanner(result: $scanResult, scannedContact: $scannedContact, scannedEvent: $scannedEvent, scannedText: $scannedText)
 
                 Rectangle()
                     .ignoresSafeArea()
@@ -45,16 +46,6 @@ struct ContentView: View {
                         .padding(.trailing)
                         .padding(.top)
                     }
-
-                Text(scanResult)
-
-                    .padding()
-
-                    .background(.black)
-
-                    .foregroundColor(.white)
-
-                    .padding(.bottom)
             }
             .navigationDestination(item: $scannedText) { text in
                 ScannedTextView(text: text)
@@ -62,18 +53,23 @@ struct ContentView: View {
             .navigationDestination(item: $scannedContact) { _ in
                 ContactDetailView(scannedContact: $scannedContact)
             }
-            .navigationDestination(item: $event) { event in
-                AddEvent(scannedEvent: $event)
+            .navigationDestination(item: $scannedEvent) { event in
+                AddEvent(scannedEvent: $scannedEvent)
             }
             .task(id: selectedPhoto) {
                 if let data = try? await selectedPhoto?.loadTransferable(type: Data.self) {
                     image = data
                     detectQRCode(UIImage(data: data))?.forEach { feature in
                         if let qrFeature = feature as? CIQRCodeFeature {
-                            scannedText = qrFeature.messageString
+                            if let scanResult = qrFeature.messageString {
+                                qrCodeHandler?.handleQRCode(scanResult)
+                            }
                         }
                     }
                 }
+            }
+            .onAppear {
+                self.qrCodeHandler = QRCodeHandler(scannedContact: $scannedContact, scannedEvent: $scannedEvent, scannedText: $scannedText)
             }
         }
     }
