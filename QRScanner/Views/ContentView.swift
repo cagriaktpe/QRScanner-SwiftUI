@@ -13,7 +13,7 @@ import SwiftUI
 struct ContentView: View {
     @Environment(\.dismiss) var dismiss
     @State var scanResult = "No QR code detected"
-    @State var scannedCodes: [String] = []
+    @State var lastScanned: String?
     
     @State var image: Data?
     @State var selectedPhoto: PhotosPickerItem?
@@ -28,7 +28,7 @@ struct ContentView: View {
         GeometryReader { geo in
             NavigationStack {
                 ZStack(alignment: .bottom) {
-                    QRScanner(result: $scanResult, scannedCodes: $scannedCodes, scannedContact: $scannedContact, scannedEvent: $scannedEvent, scannedText: $scannedText)
+                    QRScanner(result: $scanResult, lastScanned: $lastScanned, scannedContact: $scannedContact, scannedEvent: $scannedEvent, scannedText: $scannedText)
 
                     buttonsLayer
 
@@ -45,7 +45,7 @@ struct ContentView: View {
                 .task(id: selectedPhoto) {
                     if let data = try? await selectedPhoto?.loadTransferable(type: Data.self) {
                         image = data
-                        detectQRCode(UIImage(data: data))?.forEach { feature in
+                        qrCodeHandler?.detectQRCode(UIImage(data: data))?.forEach { feature in
                             if let qrFeature = feature as? CIQRCodeFeature {
                                 if let scanResult = qrFeature.messageString {
                                     qrCodeHandler?.handleQRCode(scanResult)
@@ -55,7 +55,7 @@ struct ContentView: View {
                     }
                 }
                 .onAppear {
-                    self.qrCodeHandler = QRCodeHandler(scannedContact: $scannedContact, scannedEvent: $scannedEvent, scannedText: $scannedText)
+                    self.qrCodeHandler = QRCodeHandler(scannedContact: $scannedContact, scannedEvent: $scannedEvent, scannedText: $scannedText, lastScanned: $lastScanned)
                 }
                 .ignoresSafeArea()
             }
@@ -90,7 +90,7 @@ struct ContentView: View {
     
     var scannedQRLayer: some View {
         Button {
-            if let code = scannedCodes.last {
+            if let code = lastScanned {
                 qrCodeHandler?.handleQRCode(code)
             }
         } label: {
@@ -103,27 +103,7 @@ struct ContentView: View {
         .background(Color(UIColor.secondarySystemBackground))
         .cornerRadius(30)
         .shadow(radius: 10)
-        .disabled(scannedCodes.isEmpty)
-    }
-}
-
-extension ContentView {
-    func detectQRCode(_ image: UIImage?) -> [CIFeature]? {
-        if let image = image, let ciImage = CIImage(image: image) {
-            var options: [String: Any]
-            let context = CIContext()
-            options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
-            let qrDetector = CIDetector(ofType: CIDetectorTypeQRCode, context: context, options: options)
-            if ciImage.properties.keys.contains(kCGImagePropertyOrientation as String) {
-                options = [CIDetectorImageOrientation: ciImage.properties[kCGImagePropertyOrientation as String] ?? 1]
-            } else {
-                options = [CIDetectorImageOrientation: 1]
-            }
-            let features = qrDetector?.features(in: ciImage, options: options)
-            scannedCodes.append(contentsOf: features?.compactMap { ($0 as? CIQRCodeFeature)?.messageString } ?? [])
-            return features
-        }
-        return nil
+        .disabled(lastScanned == nil)
     }
 }
 

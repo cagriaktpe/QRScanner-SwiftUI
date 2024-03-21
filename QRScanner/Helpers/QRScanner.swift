@@ -63,7 +63,7 @@ class QRScannerController: UIViewController {
 
 struct QRScanner: UIViewControllerRepresentable {
     @Binding var result: String
-    @Binding var scannedCodes: [String]
+    @Binding var lastScanned: String?
     @Binding var scannedContact: CNContact?
     @Binding var scannedEvent: IdentifiableEKEvent?
     @Binding var scannedText: String?
@@ -80,20 +80,20 @@ struct QRScanner: UIViewControllerRepresentable {
 
     class Coordinator: NSObject, AVCaptureMetadataOutputObjectsDelegate {
         @Binding var scanResult: String
-        @Binding var scannedCodes: [String]
+        @Binding var lastScanned: String?
         @Binding var scannedContact: CNContact?
         @Binding var scannedEvent: IdentifiableEKEvent?
         @Binding var scannedText: String?
         var qrCodeHandler: QRCodeHandler
         
 
-        init(_ scanResult: Binding<String>, scannedCodes: Binding<[String]>, scannedContact: Binding<CNContact?>, scannedEvent: Binding<IdentifiableEKEvent?>, scannedText: Binding<String?>) {
+        init(_ scanResult: Binding<String>, lastScanned: Binding<String?>, scannedContact: Binding<CNContact?>, scannedEvent: Binding<IdentifiableEKEvent?>, scannedText: Binding<String?>) {
             _scanResult = scanResult
-            _scannedCodes = scannedCodes
+            _lastScanned = lastScanned
             _scannedContact = scannedContact
             _scannedEvent = scannedEvent
             _scannedText = scannedText
-            qrCodeHandler = QRCodeHandler(scannedContact: scannedContact, scannedEvent: scannedEvent, scannedText: scannedText)
+            qrCodeHandler = QRCodeHandler(scannedContact: scannedContact, scannedEvent: scannedEvent, scannedText: scannedText, lastScanned: lastScanned)
         }
 
         func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
@@ -109,11 +109,11 @@ struct QRScanner: UIViewControllerRepresentable {
                let result = metadataObj.stringValue {
                 scanResult = result
                 
-                if scannedCodes.contains(scanResult) {
+                if lastScanned == result {
                     return
                 }
                 
-                scannedCodes.append(result)
+                lastScanned = result
                 qrCodeHandler.handleQRCode(result)
             }
         }
@@ -122,6 +122,6 @@ struct QRScanner: UIViewControllerRepresentable {
     }
 
     func makeCoordinator() -> Coordinator {
-        Coordinator($result, scannedCodes: $scannedCodes, scannedContact: $scannedContact, scannedEvent: $scannedEvent, scannedText: $scannedText)
+        Coordinator($result, lastScanned: $lastScanned, scannedContact: $scannedContact, scannedEvent: $scannedEvent, scannedText: $scannedText)
     }
 }

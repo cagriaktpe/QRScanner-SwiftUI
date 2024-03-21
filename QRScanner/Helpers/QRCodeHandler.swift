@@ -11,15 +11,16 @@ import SwiftUI
 import EventKit
 
 class QRCodeHandler {
-    
+    @Binding var lastScanned: String?
     @Binding var scannedContact: CNContact?
     @Binding var scannedEvent: IdentifiableEKEvent?
     @Binding var scannedText: String?
     
-    init(scannedContact: Binding<CNContact?>, scannedEvent: Binding<IdentifiableEKEvent?>, scannedText: Binding<String?>) {
+    init(scannedContact: Binding<CNContact?>, scannedEvent: Binding<IdentifiableEKEvent?>, scannedText: Binding<String?>, lastScanned: Binding<String?>) {
         self._scannedContact = scannedContact
         self._scannedEvent = scannedEvent
         self._scannedText = scannedText
+        self._lastScanned = lastScanned
     }
     
     func handleQRCode(_ code: String) {
@@ -193,5 +194,26 @@ class QRCodeHandler {
     func checkIsValidURL(_ code: String) -> Bool {
         let scannedCode = code.lowercased()
         return scannedCode.hasPrefix("http") || scannedCode.hasPrefix("https") || scannedCode.hasPrefix("www") || scannedCode.hasSuffix(".com") || scannedCode.hasSuffix(".net") || scannedCode.hasSuffix(".org")
+    }
+    
+    // others
+    func detectQRCode(_ image: UIImage?) -> [CIFeature]? {
+        if let image = image, let ciImage = CIImage(image: image) {
+            var options: [String: Any]
+            let context = CIContext()
+            options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
+            let qrDetector = CIDetector(ofType: CIDetectorTypeQRCode, context: context, options: options)
+            if ciImage.properties.keys.contains(kCGImagePropertyOrientation as String) {
+                options = [CIDetectorImageOrientation: ciImage.properties[kCGImagePropertyOrientation as String] ?? 1]
+            } else {
+                options = [CIDetectorImageOrientation: 1]
+            }
+            let features = qrDetector?.features(in: ciImage, options: options)
+            // get code from features and assign to lastScanned
+            
+            lastScanned = (features?.first as? CIQRCodeFeature)?.messageString ?? ""
+            return features
+        }
+        return nil
     }
 }
