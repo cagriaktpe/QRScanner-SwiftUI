@@ -10,32 +10,28 @@ import EventKit
 import EventKitUI
 import SwiftUI
 
-class AddEventController: UIViewController, EKEventEditViewDelegate {
-    let eventStore = EKEventStore()
-    var isFirstDidAppear = true
+struct EventEditView: UIViewControllerRepresentable {
     @Binding var scannedEvent: IdentifiableEKEvent?
-    
-    init(scannedEvent: Binding<IdentifiableEKEvent?>) {
-        self._scannedEvent = scannedEvent
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func eventEditViewController(_ controller: EKEventEditViewController, didCompleteWith action: EKEventEditViewAction) {
-        controller.dismiss(animated: true, completion: nil)
-        parent?.dismiss(animated: true, completion: nil)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    @Environment(\.presentationMode) var presentationMode
 
-        guard isFirstDidAppear else {
-            return
+    class Coordinator: NSObject, EKEventEditViewDelegate {
+        var parent: EventEditView
+
+        init(_ parent: EventEditView) {
+            self.parent = parent
         }
 
+        func eventEditViewController(_ controller: EKEventEditViewController, didCompleteWith action: EKEventEditViewAction) {
+            parent.presentationMode.wrappedValue.dismiss()
+        }
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+
+    func makeUIViewController(context: Context) -> EKEventEditViewController {
+        let eventStore = EKEventStore()
         let event = EKEvent(eventStore: eventStore)
         
         if let scannedEvent = scannedEvent {
@@ -51,28 +47,12 @@ class AddEventController: UIViewController, EKEventEditViewDelegate {
         let controller = EKEventEditViewController()
         controller.event = event
         controller.eventStore = eventStore
-        controller.editViewDelegate = self
+        controller.editViewDelegate = context.coordinator
 
-        
-        
-        
-        controller.modalPresentationStyle = .currentContext
-        present(controller, animated: true, completion: nil)
-        
-        
-        isFirstDidAppear = false
-    }
-}
-
-
-struct AddEvent: UIViewControllerRepresentable {
-    @Binding var scannedEvent: IdentifiableEKEvent?
-    
-    func makeUIViewController(context: Context) -> AddEventController {
-        return AddEventController(scannedEvent: $scannedEvent)
+        return controller
     }
     
-    func updateUIViewController(_ uiViewController: AddEventController, context: Context) {
+    func updateUIViewController(_ uiViewController: EKEventEditViewController, context: Context) {
         // We need this to follow the protocol, but don't have to implement it
         // Edit here to update the state of the view controller with information from SwiftUI
     }

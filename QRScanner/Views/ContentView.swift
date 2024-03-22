@@ -48,8 +48,10 @@ struct ContentView: View {
                     ContactDetailView(scannedContact: $scannedData.scannedContact)
                 }
                 .navigationDestination(item: $scannedData.scannedEvent) { _ in
-                    AddEvent(scannedEvent: $scannedData.scannedEvent)
+                    EventEditView(scannedEvent: $scannedData.scannedEvent)
+                        .toolbar(.hidden)
                 }
+                
                 .task(id: selectedPhoto) {
                     if let data = try? await selectedPhoto?.loadTransferable(type: Data.self) {
                         image = data
