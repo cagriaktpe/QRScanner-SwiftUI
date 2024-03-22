@@ -12,35 +12,43 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(\.dismiss) var dismiss
-    @State var scanResult = "No QR code detected"
-    @State var lastScanned: String?
     
     @State var image: Data?
     @State var selectedPhoto: PhotosPickerItem?
     @State var qrCodeHandler: QRCodeHandler?
 
     // for navigations
-    @State var scannedEvent: IdentifiableEKEvent?
-    @State var scannedContact: CNContact?
-    @State var scannedText: String?
+    @StateObject var scannedData = ScannedData()
 
     var body: some View {
         GeometryReader { geo in
             NavigationStack {
                 ZStack(alignment: .bottom) {
-                    QRScanner(result: $scanResult, lastScanned: $lastScanned, scannedContact: $scannedContact, scannedEvent: $scannedEvent, scannedText: $scannedText)
+                    QRScanner(scannedData: scannedData)
 
                     buttonsLayer
+                    
+                    // text layer begins
+                    Text($scannedData.scanResult.wrappedValue)
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color.black.opacity(0.5))
+                        .cornerRadius(10)
+                        .padding()
+                        .frame(width: geo.size.width, height: 50, alignment: .center)
+                    // text layer ends
 
                 }
-                .navigationDestination(item: $scannedText) { text in
+                .navigationDestination(item: $scannedData.scannedText) { text in
                     ScannedTextView(text: text)
                 }
-                .navigationDestination(item: $scannedContact) { _ in
-                    ContactDetailView(scannedContact: $scannedContact)
+                .navigationDestination(item: $scannedData.scannedContact) { _ in
+                    ContactDetailView(scannedContact: $scannedData.scannedContact)
                 }
-                .navigationDestination(item: $scannedEvent) { _ in
-                    AddEvent(scannedEvent: $scannedEvent)
+                .navigationDestination(item: $scannedData.scannedEvent) { _ in
+                    AddEvent(scannedEvent: $scannedData.scannedEvent)
                 }
                 .task(id: selectedPhoto) {
                     if let data = try? await selectedPhoto?.loadTransferable(type: Data.self) {
@@ -55,7 +63,7 @@ struct ContentView: View {
                     }
                 }
                 .onAppear {
-                    self.qrCodeHandler = QRCodeHandler(scannedContact: $scannedContact, scannedEvent: $scannedEvent, scannedText: $scannedText, lastScanned: $lastScanned)
+                    self.qrCodeHandler = QRCodeHandler(scannedData: scannedData)
                 }
                 .ignoresSafeArea()
             }
@@ -90,7 +98,7 @@ struct ContentView: View {
     
     var scannedQRLayer: some View {
         Button {
-            if let code = lastScanned {
+            if let code = scannedData.lastScanned {
                 qrCodeHandler?.handleQRCode(code)
             }
         } label: {
@@ -103,7 +111,7 @@ struct ContentView: View {
         .background(Color(UIColor.secondarySystemBackground))
         .cornerRadius(30)
         .shadow(radius: 10)
-        .disabled(lastScanned == nil)
+        .disabled(scannedData.lastScanned == nil)
     }
 }
 

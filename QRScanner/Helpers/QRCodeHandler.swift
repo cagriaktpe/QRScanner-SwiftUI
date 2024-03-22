@@ -11,16 +11,10 @@ import SwiftUI
 import EventKit
 
 class QRCodeHandler {
-    @Binding var lastScanned: String?
-    @Binding var scannedContact: CNContact?
-    @Binding var scannedEvent: IdentifiableEKEvent?
-    @Binding var scannedText: String?
+    @ObservedObject var scannedData: ScannedData
     
-    init(scannedContact: Binding<CNContact?>, scannedEvent: Binding<IdentifiableEKEvent?>, scannedText: Binding<String?>, lastScanned: Binding<String?>) {
-        self._scannedContact = scannedContact
-        self._scannedEvent = scannedEvent
-        self._scannedText = scannedText
-        self._lastScanned = lastScanned
+    init(scannedData: ScannedData) {
+        self.scannedData = scannedData
     }
     
     func handleQRCode(_ code: String) {
@@ -68,11 +62,11 @@ class QRCodeHandler {
             }
         }
         
-        scannedEvent = IdentifiableEKEvent(event: newEvent)
+        scannedData.scannedEvent = IdentifiableEKEvent(event: newEvent)
     }
     
     func handleText(_ text: String) {
-        scannedText = text
+        scannedData.scannedText = text
     }
 
     func handleURL(_ url: String) {
@@ -147,7 +141,7 @@ class QRCodeHandler {
                 let contacts = try CNContactVCardSerialization.contacts(with: data) // get contacts array from vCard
 
                 if let firstContact = contacts.first {
-                    scannedContact = firstContact
+                    scannedData.scannedContact = firstContact
                 }
 
             } catch {
@@ -211,7 +205,7 @@ class QRCodeHandler {
             let features = qrDetector?.features(in: ciImage, options: options)
             // get code from features and assign to lastScanned
             
-            lastScanned = (features?.first as? CIQRCodeFeature)?.messageString ?? ""
+            scannedData.lastScanned = (features?.first as? CIQRCodeFeature)?.messageString ?? ""
             return features
         }
         return nil
