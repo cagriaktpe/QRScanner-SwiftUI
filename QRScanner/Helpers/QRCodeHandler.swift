@@ -11,9 +11,9 @@ import SwiftUI
 import EventKit
 
 class QRCodeHandler {
-    @ObservedObject var scannedData: ScannedData
+    @ObservedObject var scannedData: ScannedDataManager
     
-    init(scannedData: ScannedData) {
+    init(scannedData: ScannedDataManager) {
         self.scannedData = scannedData
     }
     

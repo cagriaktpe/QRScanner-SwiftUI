@@ -62,7 +62,7 @@ class QRScannerController: UIViewController {
 }
 
 struct QRScanner: UIViewControllerRepresentable {
-    @ObservedObject var scannedData: ScannedData
+    @ObservedObject var scannedData: ScannedDataManager
 
     func makeUIViewController(context: Context) -> QRScannerController {
         let controller = QRScannerController()
@@ -75,10 +75,10 @@ struct QRScanner: UIViewControllerRepresentable {
     }
 
     class Coordinator: NSObject, AVCaptureMetadataOutputObjectsDelegate {
-        @ObservedObject var scannedData: ScannedData
+        @ObservedObject var scannedData: ScannedDataManager
         var qrCodeHandler: QRCodeHandler
 
-        init(scannedData: ScannedData) {
+        init(scannedData: ScannedDataManager) {
             self.scannedData = scannedData
             qrCodeHandler = QRCodeHandler(scannedData: scannedData)
         }

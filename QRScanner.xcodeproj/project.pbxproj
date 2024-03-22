@@ -19,7 +19,7 @@
 		814F7FD52BAAF0F000A20BFD /* IdentifiableEKEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814F7FD42BAAF0F000A20BFD /* IdentifiableEKEvent.swift */; };
 		814F7FD72BAB076300A20BFD /* ScannedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814F7FD62BAB076300A20BFD /* ScannedTextView.swift */; };
 		81596DA12BAC272200A95891 /* QRCodeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81596DA02BAC272200A95891 /* QRCodeHandler.swift */; };
-		81596DBD2BAD765E00A95891 /* ScannedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81596DBC2BAD765E00A95891 /* ScannedData.swift */; };
+		81596DBD2BAD765E00A95891 /* ScannedDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81596DBC2BAD765E00A95891 /* ScannedDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,7 +36,7 @@
 		814F7FD42BAAF0F000A20BFD /* IdentifiableEKEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableEKEvent.swift; sourceTree = "<group>"; };
 		814F7FD62BAB076300A20BFD /* ScannedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedTextView.swift; sourceTree = "<group>"; };
 		81596DA02BAC272200A95891 /* QRCodeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeHandler.swift; sourceTree = "<group>"; };
-		81596DBC2BAD765E00A95891 /* ScannedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedData.swift; sourceTree = "<group>"; };
+		81596DBC2BAD765E00A95891 /* ScannedDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedDataManager.swift; sourceTree = "<group>"; };
 		819C66082BA9B21B0039B211 /* QRScanner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QRScanner.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -115,7 +115,7 @@
 				814F7FCA2BAAD5F700A20BFD /* ContactManager.swift */,
 				811DE27A2BA8577F00E3D028 /* QRScanner.swift */,
 				814F7FCE2BAADBB300A20BFD /* AddEventController.swift */,
-				81596DBC2BAD765E00A95891 /* ScannedData.swift */,
+				81596DBC2BAD765E00A95891 /* ScannedDataManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -190,7 +190,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81596DBD2BAD765E00A95891 /* ScannedData.swift in Sources */,
+				81596DBD2BAD765E00A95891 /* ScannedDataManager.swift in Sources */,
 				814F7FCF2BAADBB300A20BFD /* AddEventController.swift in Sources */,
 				814F7FD52BAAF0F000A20BFD /* IdentifiableEKEvent.swift in Sources */,
 				811DE27B2BA8578000E3D028 /* QRScanner.swift in Sources */,

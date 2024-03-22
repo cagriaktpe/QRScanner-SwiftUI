@@ -8,7 +8,7 @@
 import Foundation
 import Contacts
 
-class ScannedData: ObservableObject {
+class ScannedDataManager: ObservableObject {
     @Published var scannedContact: CNContact?
     @Published var scannedEvent: IdentifiableEKEvent?
     @Published var scannedText: String?

@@ -18,7 +18,7 @@ struct ContentView: View {
     @State var qrCodeHandler: QRCodeHandler?
 
     // for navigations
-    @StateObject var scannedData = ScannedData()
+    @StateObject var scannedData = ScannedDataManager()
 
     var body: some View {
         GeometryReader { geo in
