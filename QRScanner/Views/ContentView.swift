@@ -19,6 +19,7 @@ struct ContentView: View {
 
     // for navigations
     @StateObject var scannedData = ScannedDataManager()
+    @State private var showAlert = false
 
     var body: some View {
         GeometryReader { geo in
@@ -48,10 +49,9 @@ struct ContentView: View {
                     ContactDetailView(scannedContact: $scannedData.scannedContact)
                 }
                 .navigationDestination(item: $scannedData.scannedEvent) { _ in
-                    EventEditView(scannedEvent: $scannedData.scannedEvent)
+                    EventEditView(scannedEvent: $scannedData.scannedEvent, showAlert: $showAlert)
                         .toolbar(.hidden)
                 }
-                
                 .task(id: selectedPhoto) {
                     if let data = try? await selectedPhoto?.loadTransferable(type: Data.self) {
                         image = data
@@ -66,6 +66,9 @@ struct ContentView: View {
                 }
                 .onAppear {
                     self.qrCodeHandler = QRCodeHandler(scannedData: scannedData)
+                }
+                .alert(isPresented: $showAlert) {
+                    Alert(title: Text("Success"), message: Text("Event has been saved."), dismissButton: .default(Text("OK")))
                 }
                 .ignoresSafeArea()
             }

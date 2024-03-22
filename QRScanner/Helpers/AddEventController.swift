@@ -13,7 +13,8 @@ import SwiftUI
 struct EventEditView: UIViewControllerRepresentable {
     @Binding var scannedEvent: IdentifiableEKEvent?
     @Environment(\.presentationMode) var presentationMode
-
+    @Binding var showAlert: Bool
+    
     class Coordinator: NSObject, EKEventEditViewDelegate {
         var parent: EventEditView
 
@@ -23,6 +24,9 @@ struct EventEditView: UIViewControllerRepresentable {
 
         func eventEditViewController(_ controller: EKEventEditViewController, didCompleteWith action: EKEventEditViewAction) {
             parent.presentationMode.wrappedValue.dismiss()
+            if action == .saved {
+                parent.showAlert = true
+            }
         }
     }
 
