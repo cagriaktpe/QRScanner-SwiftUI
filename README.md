@@ -15,9 +15,9 @@
   </ul>
 </p>
 
-<p>This project is open source code part of my application: Qrifay</p>
+<p>This project is open source code part of my application: QR Wizard</p>
 
-<p><b>IMPORANT:</b> Tests have not been <b>WRITTEN</b> yet, so it may not work all the time.</p>
+<p><b>IMPORANT:</b> This repo will become a package.</p>
 
 <p>It is free the use, enjoy!</p>
 
